@@ -3,7 +3,7 @@
 >  **The Rust Programming Language**
 >  ***(https://doc.rust-lang.org/book/ch01-01-installation.html & https://doc.rust-lang.org/book/ch01-02-hello-world.html)***
 
-**1.1 Installation, ** **1.2 Namaskaraa Guruu!(Hello World)** 
+**1.1 Installation**, **1.2 Namaskaraa Guruu!(Hello World)** 
 > $ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh (For Linux/macOS)
 
 > *https://rust-lang.org/tools/install/* (For Windows)
