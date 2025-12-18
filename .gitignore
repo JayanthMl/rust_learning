@@ -1,0 +1,13 @@
+# Ignore all build artifacts (recursively)
+target/
+
+# Ignore manual build artifacts (Windows)
+*.exe
+*.pdb
+
+# System & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
