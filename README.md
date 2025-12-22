@@ -8,3 +8,7 @@ This chapter covers the installation of Rust, writing our first rust program and
 
 ### [Chapter 2 - Programming a Guessing Game](chapter_02_guessing_game/)
 This chapter helps build a basic cli project.
+
+### [Chapter 3 - Common Programming Concepts](chapter_03_common_programming_concepts/)
+**3.1 Variables and Mutability**, **3.2 Data Types**, **3.3 Functions**, **3.4 Comments**, **3.5 Control Flow.**
+This chapter covers the basic topics like variables, data types, functions, comments and control flow in Rust.
