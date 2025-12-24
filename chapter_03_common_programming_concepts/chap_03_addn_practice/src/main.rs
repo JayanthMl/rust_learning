@@ -4,127 +4,101 @@
 
 use std::io;
 
-fn main() {
-    println!("Enter   1 for temperature conversion\n \t2 for generating nth Fibonacci number\n \t3 for printing the lyrics to the chirstmas carol");
-    
-    let input: i32 = loop {
+fn read_i32() -> i32 {
+    loop {
         let mut input_str = String::new();
-        
+
         io::stdin()
             .read_line(&mut input_str)
             .expect("Failed to read line");
-    
+
         match input_str.trim().parse() {
-            Ok(num) => break num,
+            Ok(num) => return num,
             Err(_) => {
                 println!("Invalid input: enter number");
-                continue;
             }
         };
     };
+}
 
-    if input == 1 {
-        temperature_conversion();
-    } else if input == 2 {
-        fibonacci_number();
-    } else if input == 3 {
-        lyrics_print();
-    } else {
-        println!("Enter 1, 2, 3 ashte ");
+fn celsius_to_fahrenheit(num: f64) -> f64 {
+    num * 9.0 / 5.0 + 32.0
+}
+
+fn fahrenheit_to_celsius(num: f64) -> f64 {
+    (num - 32.0) * 5.0 / 9.0
+}
+
+fn read_f64() -> f64 {
+    loop {
+        let mut input_str = String::new();
+        io::stdin()
+            .read_line(&mut input_str)
+            .expect("Failed to read line");
+
+        match input_str.trim().parse() {
+            Ok(num) => return num,
+            Err(_) => println!("Invalid number, try again");
+        }
     }
 }
 
 fn temperature_conversion() {
     // Celsius to Fahrenheit: F = C(9/5) + 32
-    // Fahrenheit to Celcius: C = (F-32) (5/9)
-    println!("Press 1 to convert celcius to fahrenheit");
-    println!("Press 2 to convert fahrenheit to celcius");
+    // Fahrenheit to Celsius: C = (F-32) (5/9)
+    println!("Press 1 to convert celsius to fahrenheit");
+    println!("Press 2 to convert fahrenheit to celsius");
     
-    let input: i32 = loop {
-        let mut input_str = String::new();
-        
-        io::stdin()
-            .read_line(&mut input_str)
-            .expect("Failed to read line");
-    
-        match input_str.trim().parse() {
-            Ok(num) => break num,
-            Err(_) => {
-                println!("Invalid input: enter number");
-                continue;
-            }
-        };
-    };
+    let input = read_i32();
 
-    if input == 1 {
-        let mut temperature_celcius = String::new();
-
-        println!("Enter the temperature in celcius");
-
-        io::stdin()
-            .read_line(&mut temperature_celcius)
-            .expect("Failed to read input");
-        
-        let temperature_celcius: f64 = temperature_celcius.trim().parse().expect("Please type a number");
-
-        let fahrenheit_temperature = temperature_celcius * ( 9.0 / 5.0 ) + 32.0;
-
-        println!("Temperature in Fahrenheit is:{fahrenheit_temperature}");
-
-    } else if input == 2 {
-        let mut temperature_fahrenheit = String::new();
-
-        println!("Enter the temperature in fahrenheit");
-
-        io::stdin()
-            .read_line(&mut temperature_fahrenheit)
-            .expect("Failed to read input");
-        
-        let temperature_fahrenheit: f64 = temperature_fahrenheit.trim().parse().expect("Please type a number");
-
-        let celcius_temperature = ( temperature_fahrenheit - 32.0 ) * ( 5.0 / 9.0 );
-
-        println!("Temperature in Celcius is:{celcius_temperature}");
-
-    } else {
-        println!("Enter 1, 2 ashte");
+    match input {
+        1 => {
+            println!("Enter temperature in celsius:");
+            let temperature = read_f64();
+            let result = celsius_to_fahrenheit(temperature);
+            println!("Temperature in Fahrenheit: {result}");
+        }
+        2 => {
+            println!("Enter temperature in Fahrenheit:");
+            let temperature = read_f64();
+            let result = fahrenheit_to_celsius(temperature);
+            println!("Temperature in celsius: {result}");
+        }
+        _ => {
+            println!("Enter 1 or 2");
+        }
     }
     
+}
+
+fn fibonacci(n: i32) -> i32 {
+    if n <= 1 {
+        return n;
+    }
+    
+    let mut first = 0;
+    let mut second = 1;
+    
+    for _ in 2..=n {
+        let temp = first + second;
+        first = second;
+        second = temp;
+    }
+    second
 }
 
 fn fibonacci_number() {
     println!("Enter the number");
 
-    let input: i32 = loop {
-        let mut input_str = String::new();
-        
-        io::stdin()
-            .read_line(&mut input_str)
-            .expect("Failed to read line");
+    let input = read_i32();
     
-        match input_str.trim().parse() {
-            Ok(num) => break num,
-            Err(_) => {
-                println!("Invalid input: enter number");
-                continue;
-            }
-        };
-    };
-    
-    let mut first = 0;
-    let mut second = 1;
-
-    for _ in 2..=input {
-        let temp = first + second;
-        first = second;
-        second = temp;
+    if input < 0 {
+        println!("Please enter a non-negative number");
+        return;
     }
 
-    if input == 0 {
-        println!("Fibonacci number at position {} is: {}", input, first);
-    } else {
-        println!("Fibonacci number at position {} is: {}", input, second);
-    }
+    let result = fibonacci(input);
+    println!("Fibonacci number at position {input} is: {result}");
 
 }
 
@@ -143,12 +117,17 @@ fn lyrics_print() {
         "Eleven pipers piping",
         "Twelve drummers drumming",
     ];
+    
+    let days = [
+        "first", "second", "third", "fourth", "fifth", "sixth",
+        "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth",
+    ];
 
     for day in 0..12 {
-        println!("On the {} day of christmas, my true love gave me", day + 1);
+        println!("On the {} day of christmas, my true love gave me", days[day]);
 
         for gift in (0..=day).rev() {
-            if day == 0 && gift == 0 {
+            if day != 0 && gift == 0 {
                 println!("and {}", gifts[gift]);
             } else {
                 println!("{}", gifts[gift]);
@@ -156,4 +135,22 @@ fn lyrics_print() {
         }
         println!();
     }
+}
+
+fn main() {
+    println!("Enter   1 for temperature conversion\n \t2 for generating nth Fibonacci number\n \t3 for printing the lyrics to the chirstmas carol");
+    
+    let input = read_i32();
+
+    const TEMP: i32 = 1;
+    const FIB: i32 = 2;
+    const LYRICS: i32 = 3;
+
+    match input {
+        TEMP => temperature_conversion(),
+        FIB => fibonacci_number(),
+        LYRICS => lyrics_print(),
+        _ => println!("Enter 1, 2, 3"),
+    }
+
 }
